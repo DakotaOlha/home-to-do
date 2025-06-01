@@ -25,8 +25,17 @@ const {
   loadTasks, 
   addTask: addTaskToFirestore, 
   deleteTask, 
-  toggleTask 
+  toggleTask,
+  updateTask
 } = useTasks(selectedProjectId)
+
+const handleUpdateTask = async (taskId, updatedData) => {
+  try {
+    await updateTask(taskId, updatedData)
+  } catch (err) {
+    console.error('Помилка редагування завдання:', err)
+  }
+}
 
 let unsubscribeTasks = null
 
@@ -152,6 +161,7 @@ const handleAddTask = async (taskData) => {
           :tasks="tasks" 
           @delete-task="deleteTask"
           @toggle-task="toggleTask"
+          @update-task="handleUpdateTask"
         />
       </div>
     </main>

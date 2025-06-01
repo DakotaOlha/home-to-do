@@ -47,13 +47,24 @@ export function useTasks(selectedProjectId) {
         title: taskData.title,
         priority: taskData.priority,
         completed: false,
-        createdAt: new Date()
+        createdAt: new Date(),
+        dueDate: taskData.dueDate || null // ← нове поле
       })
       console.log('Завдання додано з ID: ', docRef.id)
     } catch (err) {
       console.error('Помилка при додаванні завдання:', err)
       error.value = `Помилка при додаванні: ${err.message}`
       throw err
+    }
+  }
+
+  const updateTask = async (taskId, updatedData) => {
+    try {
+      const tasksCollection = getTasksCollection()
+      const taskDoc = doc(tasksCollection, taskId)
+      await updateDoc(taskDoc, updatedData) // updatedData повинен містити dueDate
+    } catch (err) {
+      error.value = `Помилка оновлення: ${err.message}`
     }
   }
 
@@ -83,6 +94,7 @@ export function useTasks(selectedProjectId) {
     error,
     loadTasks,
     addTask,
+    updateTask,
     deleteTask,
     toggleTask
   }
