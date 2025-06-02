@@ -93,6 +93,23 @@ const handleAddProject = async () => {
   }
 }
 
+const { deleteProject } = useProjects() // додати до деструктуризації
+
+const handleDeleteProject = async (projectId) => {
+  const confirmed = confirm('Ви дійсно хочете видалити цей проєкт?')
+  if (!confirmed) return
+
+  try {
+    await deleteProject(projectId)
+    // Якщо видалений проєкт був активним, скинути вибір
+    if (selectedProjectId.value === projectId) {
+      selectedProjectId.value = null
+    }
+  } catch (err) {
+    console.error('Помилка видалення проекту:', err)
+  }
+}
+
 // Обробник додавання завдання
 const handleAddTask = async (taskData) => {
   if (!selectedProjectId.value) {
@@ -122,14 +139,26 @@ const handleAddTask = async (taskData) => {
       
       <ul class="projects-list">
         <li
-          v-for="project in projects"
+        v-for="project in projects"
           :key="project.id"
           :class="{ active: project.id === selectedProjectId }"
           @click="selectedProjectId = project.id"
         >
           <span class="project-icon">📁</span>
           <span class="project-name">{{ project.name }}</span>
-          <span v-if="project.id === selectedProjectId" class="active-indicator"></span>
+
+          <span 
+            v-if="project.id === selectedProjectId" 
+            class="active-indicator"
+          ></span>
+
+          <button 
+            class="delete-project-btn" 
+            @click.stop="handleDeleteProject(project.id)"
+            title="Видалити проєкт"
+          >X</button>
+
+
         </li>
       </ul>
     </aside>
@@ -297,6 +326,20 @@ const handleAddTask = async (taskData) => {
   border-radius: 50%;
   border-top-color: #3498db;
   animation: spin 1s ease-in-out infinite;
+}
+
+.delete-project-btn {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-size: 16px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.delete-project-btn:hover {
+  color: #c0392b;
 }
 
 @keyframes spin {

@@ -1,6 +1,6 @@
 import { onUnmounted } from 'vue'
 import { ref } from 'vue';
-import { collection, onSnapshot, addDoc } from 'firebase/firestore'
+import { collection, onSnapshot, addDoc, deleteDoc, doc } from 'firebase/firestore'
 import { db, auth } from '../firebase'
 
 export function useProjects() {
@@ -44,6 +44,18 @@ export function useProjects() {
     }
   }
 
+  const deleteProject = async (projectId) => {
+    try {
+      const user = auth.currentUser
+      if (!user) throw new Error('Користувач не авторизований')
+
+      const projectDocRef = doc(db, 'users', user.uid, 'projects', projectId)
+      await deleteDoc(projectDocRef)
+    } catch (err) {
+      error.value = `Помилка при видаленні проєкту: ${err.message}`
+    }
+  }
+
   onUnmounted(() => {
     if (unsubscribe) unsubscribe()
   })
@@ -53,6 +65,7 @@ export function useProjects() {
     loading,
     error,
     loadProjects,
-    addProject
+    addProject,
+    deleteProject 
   }
 }
