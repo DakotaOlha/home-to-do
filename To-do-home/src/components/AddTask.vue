@@ -5,7 +5,7 @@ const emit = defineEmits(['add-task'])
 
 const title = ref('')
 const priority = ref('medium')
-const dueDate = ref('') // нове поле
+const dueDate = ref('') 
 
 const handleSubmit = () => {
   if (!title.value.trim()) return
@@ -13,10 +13,9 @@ const handleSubmit = () => {
   emit('add-task', {
     title: title.value,
     priority: priority.value,
-    dueDate: dueDate.value || null // передаємо дату
+    dueDate: dueDate.value || null 
   })
 
-  // очищення полів
   title.value = ''
   priority.value = 'medium'
   dueDate.value = ''

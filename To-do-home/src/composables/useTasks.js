@@ -48,7 +48,7 @@ export function useTasks(selectedProjectId) {
         priority: taskData.priority,
         completed: false,
         createdAt: new Date(),
-        dueDate: taskData.dueDate || null // ← нове поле
+        dueDate: taskData.dueDate || null
       })
       console.log('Завдання додано з ID: ', docRef.id)
     } catch (err) {
@@ -62,7 +62,7 @@ export function useTasks(selectedProjectId) {
     try {
       const tasksCollection = getTasksCollection()
       const taskDoc = doc(tasksCollection, taskId)
-      await updateDoc(taskDoc, updatedData) // updatedData повинен містити dueDate
+      await updateDoc(taskDoc, updatedData) 
     } catch (err) {
       error.value = `Помилка оновлення: ${err.message}`
     }

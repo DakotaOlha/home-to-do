@@ -53,10 +53,9 @@
       const bPriority = priorityOrder[b.priority] || 4
 
       if (aPriority !== bPriority) {
-        return aPriority - bPriority // Сортуємо за пріоритетом
+        return aPriority - bPriority 
       }
 
-      // Якщо пріоритет однаковий — сортуємо за createdAt
       return new Date(a.createdAt) - new Date(b.createdAt)
     })
   })
@@ -103,7 +102,7 @@
 
         <button @click="startEdit(task)" class="edit-btn">✏️</button>
         <button @click="onDeleteTask(task.id)" class="delete-btn">
-          <!-- Іконка видалення -->
+
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M18 6L6 18" stroke="currentColor" stroke-width="2"/>
             <path d="M6 6L18 18" stroke="currentColor" stroke-width="2"/>
@@ -243,7 +242,6 @@
   color: #e74c3c;
 }
 
-/* Анімації */
 .task-item-enter-active,
 .task-item-leave-active {
   transition: all 0.3s ease;

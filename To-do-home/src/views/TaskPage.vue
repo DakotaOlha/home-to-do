@@ -9,7 +9,6 @@ import { auth } from '../firebase'
 
 const selectedProjectId = ref(null)
 
-// Ініціалізація проектів
 const { 
   projects, 
   loadProjects, 
@@ -17,7 +16,6 @@ const {
   error: projectsError 
 } = useProjects()
 
-// Ініціалізація завдань
 const { 
   tasks, 
   loading: tasksLoading, 
@@ -39,7 +37,6 @@ const handleUpdateTask = async (taskId, updatedData) => {
 
 let unsubscribeTasks = null
 
-// Завантаження проектів при авторизації
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     try {
@@ -50,14 +47,12 @@ onAuthStateChanged(auth, async (user) => {
   }
 })
 
-// Автовибір першого проекту при завантаженні
 watchEffect(() => {
   if (!selectedProjectId.value && projects.value?.length > 0) {
     selectedProjectId.value = projects.value[0].id
   }
 })
 
-// Завантаження завдань при зміні проекту
 watch(
   selectedProjectId,
   (newId) => {
@@ -77,7 +72,6 @@ watch(
   { immediate: true }
 )
 
-// Очищення підписки при видаленні компонента
 onUnmounted(() => {
   if (unsubscribeTasks) unsubscribeTasks()
 })
@@ -93,7 +87,7 @@ const handleAddProject = async () => {
   }
 }
 
-const { deleteProject } = useProjects() // додати до деструктуризації
+const { deleteProject } = useProjects() 
 
 const handleDeleteProject = async (projectId) => {
   const confirmed = confirm('Ви дійсно хочете видалити цей проєкт?')
@@ -101,7 +95,6 @@ const handleDeleteProject = async (projectId) => {
 
   try {
     await deleteProject(projectId)
-    // Якщо видалений проєкт був активним, скинути вибір
     if (selectedProjectId.value === projectId) {
       selectedProjectId.value = null
     }
@@ -110,7 +103,6 @@ const handleDeleteProject = async (projectId) => {
   }
 }
 
-// Обробник додавання завдання
 const handleAddTask = async (taskData) => {
   if (!selectedProjectId.value) {
     console.error('Проект не вибрано')
@@ -198,7 +190,6 @@ const handleAddTask = async (taskData) => {
 </template>
 
 <style scoped>
-/* Основний макет */
 .task-page {
   display: flex;
   min-height: 100vh;
@@ -206,7 +197,6 @@ const handleAddTask = async (taskData) => {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Бічна панель */
 .sidebar {
   width: 18vw;
   background-color: #2c3e50;
@@ -291,7 +281,6 @@ const handleAddTask = async (taskData) => {
   margin-left: 10px;
 }
 
-/* Основний вміст */
 .main-content {
   width: 82vw;
   padding: 30px;
@@ -310,7 +299,6 @@ const handleAddTask = async (taskData) => {
   font-weight: 600;
 }
 
-/* Стани завантаження та помилок */
 .loading-state {
   display: flex;
   align-items: center;
@@ -355,7 +343,6 @@ const handleAddTask = async (taskData) => {
   font-size: 14px;
 }
 
-/* Адаптація для мобільних пристроїв */
 @media (max-width: 768px) {
   .task-page {
     flex-direction: column;

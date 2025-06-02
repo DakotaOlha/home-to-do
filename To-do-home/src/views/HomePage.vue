@@ -22,15 +22,15 @@ const navigateTo = (path) => {
     
     <div class="features">
       <div class="feature-card">
-        <h3>📝 Керування завданнями</h3>
+        <h3>Керування завданнями</h3>
         <p>Додавайте, редагуйте та видаляйте завдання</p>
       </div>
       <div class="feature-card">
-        <h3>🔝 Пріоритети</h3>
+        <h3>Пріоритети</h3>
         <p>Встановлюйте пріоритети для ваших справ</p>
       </div>
       <div class="feature-card">
-        <h3>📅 Планування</h3>
+        <h3>Планування</h3>
         <p>Організовуйте ваш день ефективно</p>
       </div>
     </div>
@@ -48,6 +48,8 @@ const navigateTo = (path) => {
 .hero-section {
   text-align: center;
   padding: 4rem 0;
+  height: 75vh;
+  align-content: center;
   background: linear-gradient(135deg, #6e8efb, #a777e3);
   color: white;
   border-radius: 12px;
